@@ -206,7 +206,7 @@ export const GitHubActivity: React.FC = () => {
     },
     {
       label: t.github.openSource,
-      value: reposLoading ? '…' : `100`,
+      value: reposLoading ? '…' : `100%`,
       //value: reposLoading ? '…' : `${openSourcePct}%`,
       icon: <Star size={16} />,
       color: 'text-cyan-400',
