@@ -180,8 +180,9 @@ export const GitHubActivity: React.FC = () => {
 
   const recentRepos = (repos ?? []).slice(0, 4);
   const nonForkCount = (repos ?? []).filter((r) => !r.fork).length;
-  const openSourcePct = (repos ?? []).length
-    ? Math.round((nonForkCount / repos.length) * 100)
+  const repoCount = (repos ?? []).length;
+  const openSourcePct = repoCount
+    ? Math.round((nonForkCount / repoCount) * 100)
     : 100;
 
   const commitCount = (events ?? []).reduce(
