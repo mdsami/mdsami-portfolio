@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Shell(npx create-next-app@latest temp-app --typescript --tailwind --eslint --app --src-dir --import-alias @/* --use-npm --yes)",
+      "Shell(cp:*)",
+      "Shell(rm:*)",
+      "Shell(npm:*)",
+      "Shell(pdftotext:*)",
+      "Shell(python3 -c import pypdf 2 > /dev/null)",
+      "Shell(python3 -c import fitz; print('pymupdf available') 2 > /dev/null)",
+      "Shell(python3 -c import pdfplumber; print('pdfplumber available') 2 > /dev/null)",
+      "Shell(mdls:*)",
+      "Shell(pip3:*)",
+      "Shell(python3 -c from pypdf import PdfReader; r=PdfReader('Profile.pdf'); print('\\n\\n'.join([p.extract_text() for p in r.pages])))",
+      "Shell(python3 -m pip install --user pypdf --quiet 2 >& 1)",
+      "Shell(cd /Users/mdsami/Documents/mdsami.me && for icon in Github Linkedin Twitter Globe AtSign Link Code Mail Calendar Send Terminal; do c=$(grep -cE \"default as ${icon}(Icon)?[,}]\" node_modules/lucide-react/dist/esm/lucide-react.mjs); echo \"$icon: $c\"; done)",
+      "Shell(curl -s http://localhost:3000)",
+      "Shell(grep:*)",
+      "Shell(ps:*)",
+      "Shell(yarn:*)",
+      "Shell(node --version)",
+      "Shell(ls:*)",
+      "Shell(npx eslint src --ext .ts,.tsx 2 >& 1)",
+      "Shell(node -e \"const p=require('./package-lock.json'); const r=p.packages['']; console.log('root deps:', Object.keys(r.dependencies||{}).length); console.log('root devDeps:', Object.keys(r.devDependencies||{}).length); console.log(JSON.stringify(r.devDependencies,null,2));\")"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}
