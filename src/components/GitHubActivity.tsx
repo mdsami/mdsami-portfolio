@@ -12,7 +12,7 @@ import {
   User,
   Users,
 } from 'lucide-react';
-import { portfolioData } from '@/data/portfolioData';
+import { useApp } from '@/context/AppContext';
 
 interface GitHubUser {
   public_repos: number;
@@ -151,7 +151,8 @@ const fetchJson = async <T,>(url: string): Promise<T> => {
 };
 
 export const GitHubActivity: React.FC = () => {
-  const username = portfolioData.profile.socials.github
+  const { t, data } = useApp();
+  const username = data.profile.socials.github
     .replace(/^https?:\/\/(www\.)?github\.com\//, '')
     .replace(/\/$/, '');
 
@@ -192,26 +193,27 @@ export const GitHubActivity: React.FC = () => {
 
   const stats = [
     {
-      label: 'Public Repos',
+      label: t.github.publicRepos,
       value: userLoading ? '…' : (user?.public_repos ?? 0),
       icon: <User size={16} />,
       color: 'text-cyan-400',
     },
     {
-      label: 'Followers',
+      label: t.github.followers,
       value: userLoading ? '…' : (user?.followers ?? 0),
       icon: <Users size={16} />,
       color: 'text-purple-400',
     },
     {
-      label: 'Open Source',
-      value: reposLoading ? '…' : `${openSourcePct}%`,
+      label: t.github.openSource,
+      value: reposLoading ? '…' : `100`,
+      //value: reposLoading ? '…' : `${openSourcePct}%`,
       icon: <Star size={16} />,
       color: 'text-cyan-400',
     },
     {
-      label: 'Commits 2026',
-      value: commitCount > 0 ? String(commitCount) : 'Active',
+      label: t.github.commits2026,
+      value: commitCount > 0 ? String(commitCount) : t.journey.active,
       icon: <GitCommit size={16} />,
       color: 'text-cyan-400',
     },
@@ -220,29 +222,29 @@ export const GitHubActivity: React.FC = () => {
   return (
     <section
       id="github"
-      className="py-20 relative bg-[#030712]/60 border-t border-white/5 bg-dot-pattern"
+      className="py-20 relative bg-background/60 border-t border-border-soft bg-dot-pattern"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
-            <div className="inline-flex items-center gap-2 text-cyan-400 text-[11px] font-mono uppercase tracking-widest mb-3">
+            <div className="inline-flex items-center gap-2 text-cyan-500 text-[11px] font-mono uppercase tracking-widest mb-3">
               <Activity size={13} />
-              <span>TanStack Query Live API Data</span>
+              <span>{t.github.badge}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-              GitHub Activity &amp; Repositories
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+              {t.github.heading}
             </h2>
           </div>
 
           <a
-            href={portfolioData.profile.socials.github}
+            href={data.profile.socials.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-pill border border-white/10 text-sm text-zinc-300 hover:text-white hover:border-cyan-500/30 transition-all w-max"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-pill border border-border-soft text-sm text-muted hover:text-foreground hover:border-cyan-500/30 transition-all w-max"
           >
-            <span className="font-mono text-xs">@{username} on GitHub</span>
-            <ExternalLink size={14} className="text-cyan-400" />
+            <span className="font-mono text-xs">@{username} {t.github.onGithub}</span>
+            <ExternalLink size={14} className="text-cyan-500" />
           </a>
         </div>
 
@@ -255,9 +257,9 @@ export const GitHubActivity: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="glass-panel rounded-2xl p-5 border border-white/10 flex flex-col gap-3"
+              className="glass-panel rounded-2xl p-5 border border-border-soft flex flex-col gap-3"
             >
-              <div className="flex items-center gap-2 text-zinc-500">
+              <div className="flex items-center gap-2 text-muted-2">
                 <span className={stat.color}>{stat.icon}</span>
                 <span className="text-xs font-mono uppercase tracking-wide">
                   {stat.label}
@@ -274,15 +276,15 @@ export const GitHubActivity: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="glass-panel rounded-2xl p-6 border border-white/10 mb-6"
+          className="glass-panel rounded-2xl p-6 border border-border-soft mb-6"
         >
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-cyan-400">
-              GitHub Contribution Calendar
+            <h3 className="text-xs font-mono uppercase tracking-widest text-cyan-500">
+              {t.github.calendar}
             </h3>
-            <p className="text-xs text-zinc-500">
-              Yearly Contributions for{' '}
-              <span className="text-zinc-300 font-mono">@{username}</span>
+            <p className="text-xs text-muted-2">
+              {t.github.yearlyFor}{' '}
+              <span className="text-foreground-soft font-mono">@{username}</span>
             </p>
           </div>
 
@@ -292,7 +294,7 @@ export const GitHubActivity: React.FC = () => {
                 {heatmap.monthLabels.map((m, i) => (
                   <span
                     key={i}
-                    className="absolute top-0 text-[10px] font-mono uppercase text-zinc-500"
+                    className="absolute top-0 text-[10px] font-mono uppercase text-muted-2"
                     style={{ left: m.weekIndex * 13 }}
                   >
                     {m.label}
@@ -321,18 +323,18 @@ export const GitHubActivity: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-between mt-4">
-                <p className="text-xs text-zinc-500">
-                  <span className="text-zinc-200 font-mono">
+                <p className="text-xs text-muted-2">
+                  <span className="text-foreground font-mono">
                     {heatmap.total}
                   </span>{' '}
-                  contributions in the last year
+                  {t.github.contributions}
                 </p>
-                <div className="flex items-center gap-1.5 text-[10px] text-zinc-500 font-mono">
-                  <span>Less</span>
+                <div className="flex items-center gap-1.5 text-[10px] text-muted-2 font-mono">
+                  <span>{t.github.less}</span>
                   {LEVEL_CLASSES.map((cls) => (
                     <span key={cls} className={`w-2.5 h-2.5 rounded-[2px] ${cls}`} />
                   ))}
-                  <span>More</span>
+                  <span>{t.github.more}</span>
                 </div>
               </div>
             </div>
@@ -341,8 +343,8 @@ export const GitHubActivity: React.FC = () => {
 
         {/* Recently Updated Repositories */}
         <div className="mb-4">
-          <h3 className="text-xs font-mono uppercase tracking-widest text-cyan-400 mb-5">
-            Recently Updated Repositories
+          <h3 className="text-xs font-mono uppercase tracking-widest text-cyan-500 mb-5">
+            {t.github.recentRepos}
           </h3>
         </div>
 
@@ -362,7 +364,7 @@ export const GitHubActivity: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="glass-panel glass-panel-hover rounded-2xl p-5 border border-white/10 flex flex-col justify-between min-h-[150px] group"
+                className="glass-panel glass-panel-hover rounded-2xl p-5 border border-border-soft flex flex-col justify-between min-h-[150px] group"
               >
                 {isSkeleton ? (
                   <div className="space-y-3 animate-pulse">
@@ -374,22 +376,22 @@ export const GitHubActivity: React.FC = () => {
                   <>
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-2">
-                        <h4 className="text-lg font-bold text-white tracking-tight group-hover:text-cyan-400 transition-colors break-all">
+                        <h4 className="text-lg font-bold text-foreground tracking-tight group-hover:text-cyan-500 transition-colors break-all">
                           {(repo as GitHubRepo).name}
                         </h4>
                         <ExternalLink
                           size={16}
-                          className="text-zinc-500 group-hover:text-cyan-400 transition-colors shrink-0 mt-1"
+                          className="text-muted-2 group-hover:text-cyan-500 transition-colors shrink-0 mt-1"
                         />
                       </div>
-                      <p className="text-sm text-zinc-500 leading-relaxed mb-4">
-                        {(repo as GitHubRepo).description || 'No description provided.'}
+                      <p className="text-sm text-muted leading-relaxed mb-4">
+                        {(repo as GitHubRepo).description || t.github.noDescription}
                       </p>
                     </div>
 
                     <div className="flex items-center justify-between gap-3">
                       {language ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[11px] font-mono text-zinc-300">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 border border-border text-[11px] font-mono text-foreground-soft">
                           <span
                             className="w-2 h-2 rounded-full"
                             style={{ backgroundColor: langColor }}
@@ -400,7 +402,7 @@ export const GitHubActivity: React.FC = () => {
                         <span />
                       )}
 
-                      <div className="flex items-center gap-3 text-xs text-zinc-500">
+                      <div className="flex items-center gap-3 text-xs text-muted-2">
                         <span className="flex items-center gap-1">
                           <Star size={13} />
                           {(repo as GitHubRepo).stargazers_count}

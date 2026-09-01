@@ -3,44 +3,44 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, RefreshCw } from 'lucide-react';
-import { portfolioData, SkillCategory } from '@/data/portfolioData';
+import { SkillCategory } from '@/data/portfolioData';
+import { useApp } from '@/context/AppContext';
 
 export const SkillsTerminal: React.FC = () => {
+  const { t, data } = useApp();
   const [selectedCategory, setSelectedCategory] = useState<string>('cloud-devops');
 
-  const activeCategoryData = portfolioData.skillCategories.find(
+  const activeCategoryData = data.skillCategories.find(
     (cat) => cat.id === selectedCategory
-  ) || portfolioData.skillCategories[0];
+  ) || data.skillCategories[0];
 
   const handleCategorySelect = (category: SkillCategory) => {
     setSelectedCategory(category.id);
   };
 
   const handleClear = () => {
-    setSelectedCategory(portfolioData.skillCategories[0].id);
+    setSelectedCategory(data.skillCategories[0].id);
   };
 
   return (
-    <section id="skills" className="py-20 relative bg-[#030712]/70 border-t border-white/5 bg-dot-pattern">
+    <section id="skills" className="py-20 relative bg-background/70 border-t border-border-soft bg-dot-pattern">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill border border-emerald-500/20 text-emerald-500 text-xs font-mono mb-3">
             <Terminal size={13} />
-            <span>Interactive Tech Stack</span>
+            <span>{t.skills.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Technical skills & engineering stack.
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+            {t.skills.heading}
           </h2>
-          <p className="mt-4 text-zinc-400 text-base leading-relaxed">
-            Explore my engineering capabilities through the interactive CLI terminal. Select categories to inspect specialized tools and architectures.
+          <p className="mt-4 text-muted text-base leading-relaxed">
+            {t.skills.paragraph}
           </p>
         </div>
 
         {/* Terminal Container */}
         <div className="max-w-4xl mx-auto terminal-window rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
-          
           {/* Terminal Header Bar */}
           <div className="bg-[#0c121e] px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -53,14 +53,14 @@ export const SkillsTerminal: React.FC = () => {
             <div className="flex items-center gap-4 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-emerald-400 font-semibold">ONLINE</span>
+                <span className="text-emerald-400 font-semibold">{t.skills.online}</span>
               </div>
               <button
                 onClick={handleClear}
                 className="hover:text-white transition-colors flex items-center gap-1 text-[11px] bg-zinc-800/60 px-2 py-0.5 rounded"
               >
                 <RefreshCw size={11} />
-                <span>Wipe</span>
+                <span>{t.skills.wipe}</span>
               </button>
             </div>
           </div>
@@ -68,10 +68,10 @@ export const SkillsTerminal: React.FC = () => {
           {/* Interactive Trigger Matrix */}
           <div className="bg-[#060910] p-4 sm:p-5 border-b border-zinc-800/80">
             <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mb-2.5">
-              Trigger Command Matrix:
+              {t.skills.triggerMatrix}
             </div>
             <div className="flex flex-wrap gap-2">
-              {portfolioData.skillCategories.map((cat) => {
+              {data.skillCategories.map((cat) => {
                 const isActive = selectedCategory === cat.id;
                 return (
                   <button
@@ -133,18 +133,15 @@ export const SkillsTerminal: React.FC = () => {
             {/* Terminal Status Output */}
             <div className="pt-4 mt-4 border-t border-zinc-900 flex flex-wrap items-center justify-between text-zinc-500 text-[11px]">
               <div>
-                Loaded <span className="text-emerald-400 font-semibold">{activeCategoryData.skills.length}</span> tools in <span className="text-zinc-300">{activeCategoryData.name}</span>
+                {t.skills.loaded} <span className="text-emerald-400 font-semibold">{activeCategoryData.skills.length}</span> {t.skills.toolsIn} <span className="text-zinc-300">{activeCategoryData.name}</span>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-zinc-400">Architecture:</span>
-                <span className="text-cyan-400">Microservices & Cloud Native</span>
+                <span className="text-zinc-400">{t.skills.architecture}</span>
+                <span className="text-cyan-400">{t.skills.architectureValue}</span>
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
     </section>
   );

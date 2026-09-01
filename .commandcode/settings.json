@@ -26,7 +26,12 @@
       "Shell(ls node_modules | head -50; echo \"=== count ===\"; ls node_modules | wc -l; echo \"=== next bin ===\"; ls -la node_modules/.bin/next 2>&1; echo \"=== next pkg ===\"; ls node_modules/next/package.json 2>&1)",
       "Shell(node -e \"const p=require('./package-lock.json'); console.log('total packages in lock:', Object.keys(p.packages).length);\"; echo \"=== npm config omit ===\"; npm config get omit; echo \"=== NODE_ENV ===\"; echo \"$NODE_ENV\"; echo \"=== .npmrc ===\"; cat .npmrc 2>&1; cat ~/.npmrc 2>&1 | head -20)",
       "Shell(npx next build 2 >& 1)",
-      "Shell(curl -s https://api.github.com/users/mdsami)"
+      "Shell(curl -s https://api.github.com/users/mdsami)",
+      "Shell(pwd; echo \"---\"; git rev-parse --is-inside-work-tree 2>&1; echo \"---\"; ls -la .git 2>&1 | head -5; echo \"--- gh auth ---\"; gh auth status 2>&1 | head -20)",
+      "Shell(git log --oneline -5 2>&1; echo \"--- tracked files count ---\"; git ls-files | wc -l; echo \"--- .gitignore ---\"; cat .gitignore)",
+      "Shell(npx next dev -p 3111 > /tmp/mdsami-dev.log 2>&1 & echo $!)",
+      "Shell(cat:*)",
+      "Shell(lsof:*)"
     ],
     "deny": [],
     "defaultMode": "default"

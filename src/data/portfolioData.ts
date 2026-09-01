@@ -3,14 +3,16 @@ export interface Project {
   title: string;
   subtitle: string;
   description: string;
-  status: 'Production Ready' | 'In Progress' | 'Open Source';
+  status: string;
+  statusKind: 'production' | 'in-progress' | 'open-source';
   featured: boolean;
   tags: string[];
   keyFeatures: string[];
   githubUrl?: string;
   liveUrl?: string;
   stars?: number;
-  category: 'AI & SaaS' | 'Cloud & DevOps' | 'Mobile & Web Platforms';
+  category: string;
+  categoryKey: 'ai-saas' | 'cloud-devops' | 'mobile-web';
 }
 
 export interface SkillCategory {
@@ -158,8 +160,10 @@ export const portfolioData = {
       subtitle: "AI/ML SaaS Product Studio",
       description: "An AI-driven product company building SaaS MVPs, mobile apps, and web platforms for founders. Specializes in Gen AI, Flutter, Next.js, Node.js, and Laravel.",
       status: "Production Ready",
+      statusKind: "production",
       featured: true,
       category: "AI & SaaS",
+      categoryKey: "ai-saas",
       tags: ["Gen AI", "Next.js", "Flutter", "Node.js", "Laravel", "AWS"],
       keyFeatures: [
         "AI-driven SaaS MVPs for founders",
@@ -175,8 +179,10 @@ export const portfolioData = {
       subtitle: "Femtech Health Platform",
       description: "A Femtech platform enabling women to track menstrual and pregnancy cycles, access professional healthcare support, and order eco-friendly hygiene products to their doorstep.",
       status: "Production Ready",
+      statusKind: "production",
       featured: true,
       category: "Mobile & Web Platforms",
+      categoryKey: "mobile-web",
       tags: ["Flutter", "Node.js", "Healthcare", "Mobile App", "REST APIs"],
       keyFeatures: [
         "Menstrual & pregnancy cycle tracking",
@@ -191,8 +197,10 @@ export const portfolioData = {
       subtitle: "Blue-Collar Job Platform",
       description: "A high-availability blue-collar job platform where I owned the full deployment architecture, Kubernetes with Istio service mesh, and multi-cloud infrastructure.",
       status: "Production Ready",
+      statusKind: "production",
       featured: true,
       category: "Cloud & DevOps",
+      categoryKey: "cloud-devops",
       tags: ["Kubernetes", "Istio", "AWS", "Azure", "High Availability"],
       keyFeatures: [
         "Kubernetes with Istio service mesh",
@@ -207,8 +215,10 @@ export const portfolioData = {
       subtitle: "Open-Source Containerization Guide",
       description: "A hands-on laboratory for mastering Docker concepts, multi-stage production builds, networking, and container orchestration.",
       status: "Open Source",
+      statusKind: "open-source",
       featured: false,
       category: "Cloud & DevOps",
+      categoryKey: "cloud-devops",
       tags: ["Docker", "Linux", "DevOps", "Open Source"],
       keyFeatures: [
         "Production-ready Dockerfiles",
@@ -224,8 +234,10 @@ export const portfolioData = {
       subtitle: "Enterprise Container Orchestration",
       description: "Production-grade Kubernetes deployment architecture across Azure AKS, Amazon EKS, and Google GKE with automated ingress and rolling updates.",
       status: "Open Source",
+      statusKind: "open-source",
       featured: false,
       category: "Cloud & DevOps",
+      categoryKey: "cloud-devops",
       tags: ["Kubernetes", "AKS", "EKS", "GKE", "Terraform"],
       keyFeatures: [
         "Multi-cloud deployment parity",
